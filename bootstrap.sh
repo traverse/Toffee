@@ -41,7 +41,7 @@ sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver mul
 # Install PHPMyAdmin.
 sudo apt-get -y install phpmyadmin 2> /dev/null
 
-# Setup hosts file
+# Setup hosts file.
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
     DocumentRoot "/var/www/html"
