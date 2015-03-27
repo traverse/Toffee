@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PASSWORD="vagrant"
+DATABASE="vagrant_db"
 
 # Start updating out of date things.
 sudo apt-get update 2> /dev/null
@@ -61,4 +62,4 @@ sudo a2enmod rewrite 2> /dev/null
 sudo service apache2 reload 2> /dev/null
 
 # Create a MySQL database.
-mysql -uroot -p$PASSWORD -e "CREATE DATABASE vagrant_db DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci"
+mysql -uroot -p$PASSWORD -e "CREATE DATABASE $DATABASE DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci"
