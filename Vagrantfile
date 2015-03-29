@@ -23,7 +23,7 @@ project_name = "projectname"
 ip_address = "192.168.9.99"
 
 # The adress on which the VM will be available in your browser.
-hostname = "local."+project_name+".dev"
+hostname = project_name+".dev"
 
 # The Vagrant SSH username.
 username = "vagrant"
@@ -77,7 +77,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
-  # Example for VirtualBox:
   config.vm.provider :virtualbox do |vb|
 
     # Set the VirtualBox name when booting the machine.
