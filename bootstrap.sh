@@ -3,7 +3,7 @@
 # Variables used for configuration.
 PASSWORD="vagrant"
 DATABASE="vagrant_db"
-ERROR_LEVEL="E_ALL"
+ERROR_LEVEL="E_ALL & E_STRICT & E_DEPRECATED"
 
 # Start updating out of date things.
 sudo apt-get update 2> /dev/null

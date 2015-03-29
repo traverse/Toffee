@@ -68,8 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     owner: "vagrant",
     group: "vagrant"
 
-  config.vm.synced_folder "./html", "/var/www/html
-  ",
+  config.vm.synced_folder "./html", "/var/www/html",
     create: true,
     id: "web-root",
     owner: "www-data",
