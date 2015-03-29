@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Variables used for configuration.
 PASSWORD="vagrant"
 DATABASE="vagrant_db"
+ERROR_LEVEL="E_ALL"
 
 # Start updating out of date things.
 sudo apt-get update 2> /dev/null
@@ -20,9 +22,17 @@ sudo apt-get install php5-common php5-dev php5-cli php5-fpm -y 2> /dev/null
 # Install PHP extensions.
 sudo apt-get install curl php5-curl php5-gd php5-mcrypt php5-mysql -y 2> /dev/null
 
+# Install Xdebug.
+mkdir /var/log/xdebug
+chown www-data:www-data /var/log/xdebug
+sudo pecl install xdebug
+
 # Install Apache2 server.
 sudo apt-get install -y apache2 2> /dev/null
 sudo apt-get install -y libapache2-mod-php5 2> /dev/null
+
+# Enable Apache mod_rewrite.
+sudo a2enmod rewrite 2> /dev/null
 
 # Prepare for MySQL installation.
 sudo apt-get install debconf-utils -y 2> /dev/null
@@ -42,8 +52,25 @@ sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver mul
 # Install PHPMyAdmin.
 sudo apt-get -y install phpmyadmin 2> /dev/null
 
+# Edit php.ini to enable error reporting.
+sed -i "s/error_reporting = .*/error_reporting = $ERROR_LEVEL/" /etc/php5/apache2/php.ini
+sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/apache2/php.ini
+
+# Edit php.ini to enable Xdebug.
+cat << EOF | sudo tee -a /etc/php5/apache2/php.ini
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;         Xdebug         ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+zend_extension = "$(find / -name "xdebug.so" 2> /dev/null)"
+xdebug.default_enable = 1
+xdebug.scream = 1
+
+EOF
+
 # Setup hosts file.
-VHOST=$(cat <<EOF
+cat << EOF | sudo tee /etc/apache2/sites-available/000-default.conf
 <VirtualHost *:80>
     DocumentRoot "/var/www/html"
     <Directory "/var/www/html">
@@ -52,11 +79,6 @@ VHOST=$(cat <<EOF
     </Directory>
 </VirtualHost>
 EOF
-)
-echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
-
-# Enable Apache mod_rewrite.
-sudo a2enmod rewrite 2> /dev/null
 
 # Restart the Apache2 server.
 sudo service apache2 reload 2> /dev/null
