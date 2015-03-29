@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Mapping the port used by MySQL.
-  config.vm.network "forwarded_port", guest: 3360, host: 8081
+  config.vm.network "forwarded_port", guest: 3306, host: 8081
 
   # Share additional folders to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
