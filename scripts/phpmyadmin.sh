@@ -44,4 +44,4 @@ ProxyPassMatch ^/phpmyadmin(.*/)$ fcgi://127.0.0.1:9000/usr/share/phpmyadmin/\$1
 
 EOF
 
-sudo
+sudo service apache2 restart
