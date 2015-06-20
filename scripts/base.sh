@@ -52,7 +52,7 @@ emailAddress=
 
 sudo mkdir -p "$SSL_DIR"
 
-sudo openssl genrsa -out "$SSL_DIR/toffe.dev.key" 1024
+sudo openssl genrsa -out "$SSL_DIR/toffee.dev.key" 1024
 sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/toffee.dev.key" -out "$SSL_DIR/toffee.dev.csr" -passin pass:$PASSPHRASE
 sudo openssl x509 -req -days 365 -in "$SSL_DIR/toffee.dev.csr" -signkey "$SSL_DIR/toffee.dev.key" -out "$SSL_DIR/toffee.dev.crt"
 
