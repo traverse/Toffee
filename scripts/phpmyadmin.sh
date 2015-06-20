@@ -38,10 +38,8 @@ sudo apt-get install -qq phpmyadmin
 
 # Add php-fcgi config to phpMyAdmin 'apache.conf'
 cat << EOF | sudo tee -a $(find /etc/phpmyadmin -name apache.conf)
-
 ProxyPassMatch ^/phpmyadmin(.*\.php)$ fcgi://127.0.0.1:9000/usr/share/phpmyadmin/\$1
 ProxyPassMatch ^/phpmyadmin(.*/)$ fcgi://127.0.0.1:9000/usr/share/phpmyadmin/\$1index.php
-
 EOF
 
 sudo service apache2 restart

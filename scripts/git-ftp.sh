@@ -5,7 +5,7 @@ git --version > /dev/null 2>&1
 GIT_IS_INSTALLED=$?
 
 if [[ $GIT_IS_INSTALLED -gt 0 ]]; then
-    echo ">>> ERROR: git-ftp install requires git"
+    echo "!!! ERROR: git-ftp install requires git"
     exit 1
 fi
 
@@ -14,7 +14,7 @@ curl --version > /dev/null 2>&1
 CURL_IS_INSTALLED=$?
 
 if [[ $CURL_IS_INSTALLED -gt 0 ]]; then
-    echo ">>> ERROR: git-ftp install requires cURL"
+    echo "!!! ERROR: git-ftp install requires cURL"
     exit 1
 fi
 

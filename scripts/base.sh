@@ -11,7 +11,7 @@ echo "export LANG=C.UTF-8" >> /home/vagrant/.bashrc
 echo ">>> Installing Base Packages"
 
 if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
+    github_url="https://raw.githubusercontent.com/Traverse/Toffee/master"
 else
     github_url="$1"
 fi
@@ -46,8 +46,8 @@ ST=Limburg
 O=Toffee
 localityName=Kerkrade
 commonName=$DOMAIN
-organizationalUnitName=
-emailAddress=
+organizationalUnitName=Development
+emailAddress=info@toffee.com
 "
 
 sudo mkdir -p "$SSL_DIR"

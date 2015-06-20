@@ -6,7 +6,7 @@ echo ">>> Installing MySQL Server $2"
 
 mysql_package=mysql-server
 
-if [ $2 == "5.6" ]; then
+if [[ $2 == "5.6" ]]; then
   # Add repo for MySQL 5.6
 	sudo add-apt-repository -y ppa:ondrej/mysql-5.6
 
@@ -27,7 +27,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 sudo apt-get install -qq $mysql_package
 
 # Make MySQL connectable from outside world without SSH tunnel
-if [ $3 == "true" ]; then
+if [[ $3 == "true" ]]; then
     # enable remote access
     # setting the mysql bind-address to allow connections from everywhere
     sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf

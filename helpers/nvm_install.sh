@@ -7,7 +7,7 @@ if ! hash git 2>/dev/null; then
   exit 1
 fi
 
-if [ -d "$NVM_DIR" ]; then
+if [[ -d "$NVM_DIR" ]]; then
   echo ">>> NVM is already installed in $NVM_DIR, trying to update"
   echo -ne "\r=> "
   cd $NVM_DIR && git pull

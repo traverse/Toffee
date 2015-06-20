@@ -146,13 +146,13 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Base Packages
-   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # optimize base box
   # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
-   config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
 
   # Provision Vim
   # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
@@ -162,14 +162,14 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Apache Base
-   config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
 
   ####
   # Databases
   ##########
 
   # Provision MySQL
-   config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   ####
   # In-Memory Stores
@@ -196,7 +196,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
 
   # Install phpMyAdmin
-   config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
+  # config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
 
   # Install Screen
   # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"

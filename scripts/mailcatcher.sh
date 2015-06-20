@@ -15,7 +15,7 @@ APACHE_IS_INSTALLED=$?
 sudo apt-get install -qq libsqlite3-dev ruby1.9.1-dev
 
 if $(which rvm) -v > /dev/null 2>&1; then
-	echo ">>>>Installing with RVM"
+	echo ">>>Installing with RVM"
 	$(which rvm) default@mailcatcher --create do gem install --no-rdoc --no-ri mailcatcher
 	$(which rvm) wrapper default@mailcatcher --no-prefix mailcatcher catchmail
 else
@@ -43,7 +43,7 @@ sudo service mailcatcher start
 
 if [[ $PHP_IS_INSTALLED -eq 0 ]]; then
 	# Make php use it to send mail
-    echo "sendmail_path = /usr/bin/env $(which catchmail)" | sudo tee /etc/php5/mods-available/mailcatcher.ini
+  echo "sendmail_path = /usr/bin/env $(which catchmail)" | sudo tee /etc/php5/mods-available/mailcatcher.ini
 	sudo php5enmod mailcatcher
 	sudo service php5-fpm restart
 fi

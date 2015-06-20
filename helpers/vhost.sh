@@ -22,11 +22,11 @@ Assumes /etc/apache2/sites-available and /etc/apache2/sites-enabled setup used
             at file path /provided-file-path/your-server-or-cert-name.[crt|key].
           Otherwise you can except Apache errors when you reload Apache.
           Ensure Apache\'s mod_ssl is enabled via "sudo a2enmod ssl".
-    -c    Certificate filename. "xip.io" becomes "xip.io.key" and "xip.io.crt".
+    -c    Certificate filename. "toffee.dev" becomes "toffee.dev.key" and "toffee.dev.crt".
 
-    Example Usage. Serve files from /var/www/xip.io at http(s)://192.168.33.10.xip.io
-                   using ssl files from /etc/ssl/xip.io/xip.io.[key|crt]
-    sudo vhost -d /var/www/xip.io -s 192.168.33.10.xip.io -p /etc/ssl/xip.io -c xip.io
+    Example Usage. Serve files from /var/www/toffee.dev at http(s)://toffee.dev
+                   using ssl files from /etc/ssl/toffee.dev/toffee.dev.[key|crt]
+    sudo vhost -d /var/www/toffee.dev -s toffee.dev -p /etc/ssl/toffee.dev -c toffee.dev
 
 _EOF_
 exit 1
@@ -120,7 +120,7 @@ _EOF_
 }
 
 #Sanity Check - are there two arguments with 2 values?
-if [ "$#" -lt 4 ]; then
+if [[ "$#" -lt 4 ]]; then
     show_usage
 fi
 
@@ -154,30 +154,30 @@ while getopts "d:s:a:p:c:h" OPTION; do
 done
 
 # If alias is set:
-if [ "$Alias" != "" ]; then
+if [[ "$Alias" != "" ]]; then
     ServerAlias="ServerAlias "$Alias
 else
     ServerAlias=""
 fi
 
 # If CertName doesn't get set, set it to ServerName
-if [ "$CertName" == "" ]; then
+if [[ "$CertName" == "" ]]; then
     CertName=$ServerName
 fi
 
-if [ ! -d $DocumentRoot ]; then
+if [[ ! -d $DocumentRoot ]]; then
     mkdir -p $DocumentRoot
     #chown USER:USER $DocumentRoot #POSSIBLE IMPLEMENTATION, new flag -u ?
 fi
 
-if [ -f "$DocumentRoot/$ServerName.conf" ]; then
+if [[ -f "$DocumentRoot/$ServerName.conf" ]]; then
     echo 'vHost already exists. Aborting'
     show_usage
 else
     create_vhost > /etc/apache2/sites-available/${ServerName}.conf
 
     # Add :443 handling
-    if [ "$CertPath" != "" ]; then
+    if [[ "$CertPath" != "" ]]; then
         create_ssl_vhost >> /etc/apache2/sites-available/${ServerName}.conf
     fi
 
