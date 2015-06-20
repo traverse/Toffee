@@ -20,9 +20,9 @@ github_pat      = ""
 
 # See https://atlas.hashicorp.com/boxes/search for available boxes.
 box      = "ubuntu/trusty64"
-box_name = "Vaprobash"
+box_name = "Toffee"
 
-hostname = "vaprobash.dev"
+hostname = "toffee.dev"
 hosts    = [ # Array containing all the vhosts for vagrant-hostsupdater.
   # "example1.dev",
   # "example2.dev",
@@ -73,7 +73,7 @@ ruby_gems    = [ # List any Ruby Gems that you want to install
 # PHP Options
 
 php_timezone      = "UTC" # http://php.net/manual/en/timezones.php
-php_version       =  "5.6" # Options: 5.5 | 5.6
+php_version       = "5.6" # Options: 5.5 | 5.6
 composer_packages = [ # List any global Composer packages that you want to install
   #"phpunit/phpunit:4.7.*",
   #"codeception/codeception:2.0.*",
@@ -146,7 +146,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Base Packages
-  # config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
+   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # optimize base box
   # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
@@ -196,7 +196,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
 
   # Install phpMyAdmin
-   config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", privileged: false, args: mysql_root_password
+   config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
 
   # Install Screen
   # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"

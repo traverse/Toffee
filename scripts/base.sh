@@ -36,14 +36,14 @@ git config --global credential.helper 'cache --timeout=86400'
 
 echo ">>> Installing self-signed SSL"
 
-SSL_DIR="/etc/ssl/xip.io"
+SSL_DIR="/etc/ssl/toffee.dev"
 DOMAIN="*.dev"
-PASSPHRASE="vaprobash"
+PASSPHRASE="toffee"
 
 SUBJ="
 C=NL
 ST=Limburg
-O=Vaprobash
+O=Toffee
 localityName=Kerkrade
 commonName=$DOMAIN
 organizationalUnitName=
@@ -52,9 +52,9 @@ emailAddress=
 
 sudo mkdir -p "$SSL_DIR"
 
-sudo openssl genrsa -out "$SSL_DIR/xip.io.key" 1024
-sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.csr" -passin pass:$PASSPHRASE
-sudo openssl x509 -req -days 365 -in "$SSL_DIR/xip.io.csr" -signkey "$SSL_DIR/xip.io.key" -out "$SSL_DIR/xip.io.crt"
+sudo openssl genrsa -out "$SSL_DIR/toffe.dev.key" 1024
+sudo openssl req -new -subj "$(echo -n "$SUBJ" | tr "\n" "/")" -key "$SSL_DIR/toffee.dev.key" -out "$SSL_DIR/toffee.dev.csr" -passin pass:$PASSPHRASE
+sudo openssl x509 -req -days 365 -in "$SSL_DIR/toffee.dev.csr" -signkey "$SSL_DIR/toffee.dev.key" -out "$SSL_DIR/toffee.dev.crt"
 
 # Setting up Swap
 
