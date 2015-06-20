@@ -19,6 +19,7 @@ COMPOSER_PACKAGES=${COMPOSER_ARG[@]:1}
 # True, if composer is not installed
 if [[ $COMPOSER_IS_INSTALLED -ne 0 ]]; then
     echo ">>> Installing Composer"
+    # Install Composer
     curl -sS https://getcomposer.org/installer | php
     sudo mv composer.phar /usr/local/bin/composer
 else
