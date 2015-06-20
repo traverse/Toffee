@@ -19,11 +19,11 @@ COMPOSER_PACKAGES=${COMPOSER_ARG[@]:1}
 # True, if composer is not installed
 if [[ $COMPOSER_IS_INSTALLED -ne 0 ]]; then
     echo ">>> Installing Composer"
-      curl -sS https://getcomposer.org/installer | php
-      sudo mv composer.phar /usr/local/bin/composer
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
 else
     echo ">>> Updating Composer"
-      sudo composer self-update
+    sudo composer self-update
 fi
 
 if [[ $GITHUB_OAUTH -ne "" ]]; then
@@ -33,13 +33,12 @@ if [[ $GITHUB_OAUTH -ne "" ]]; then
     fi
 fi
 
-
 # Install Global Composer Packages if any are given
 if [[ ! -z $COMPOSER_PACKAGES ]]; then
 
     echo ">>> Installing Global Composer Packages:"
     echo "    " ${COMPOSER_PACKAGES[@]}
-      composer global require ${COMPOSER_PACKAGES[@]}
+    composer global require ${COMPOSER_PACKAGES[@]}
 
     # Add Composer's Global Bin to ~/.profile path
     if [[ -f "/home/vagrant/.profile" ]]; then
