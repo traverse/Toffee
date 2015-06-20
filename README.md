@@ -1,7 +1,5 @@
-## Basic Vagrant LAMP stack
+## Vagrant custom LAMP stack
 
-A basic Vagrant LAMP stack using a shellscript to provision the VM.
+A customizable LAMP stack complete with **Ruby** and **NodeJS**. I've borrowed heavily from *[Vaprobash](https://github.com/fideloper/Vaprobash/)*, some provisioning scripts are unaltered some are slightly tweaked/modified.
 
-Installs Apache, PHP, MySQL, PHPMyAdmin, Xdebug and sets up an empty database.
-
-Most of the configuration is done using variables in both the Vagrantfile and bootstrap.sh so if you want to change settings you only have to change the variables.
+All the configuration settings can be found in the `Vagrantfile`

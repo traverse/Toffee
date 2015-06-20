@@ -13,7 +13,7 @@ fi
 curl --version > /dev/null 2>&1
 CURL_IS_INSTALLED=$?
 
-if [ $CURL_IS_INSTALLED -gt 0 ]; then
+if [[ $CURL_IS_INSTALLED -gt 0 ]]; then
     echo ">>> ERROR: git-ftp install requires cURL"
     exit 1
 fi

@@ -24,7 +24,6 @@ fi
 # (Required to remove conflicts with PHP PPA due to partial Apache upgrade within it)
 sudo add-apt-repository -y ppa:ondrej/apache2
 
-
 # Update Again
 sudo apt-key update
 sudo apt-get update
@@ -52,7 +51,7 @@ sudo mv vhost /usr/local/bin
 sudo vhost -s $3 -d $public_folder -p /etc/ssl/$3 -c $3 -a $3
 sudo a2dissite 000-default
 
-# If PHP is installed or HHVM is installed, proxy PHP requests to it
+# If PHP is installed, proxy PHP requests to it
 if [[ $PHP_IS_INSTALLED -eq 0 ]]; then
 
     # PHP Config for Apache

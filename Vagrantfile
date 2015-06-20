@@ -5,9 +5,9 @@
 # Config GitHub Settings
 ##########
 
-github_username = "fideloper"
-github_repo     = "Vaprobash"
-github_branch   = "1.4.0"
+github_username = "Traverse"
+github_repo     = "my-vagrant-config"
+github_branch   = "develop"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
 # Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
@@ -52,7 +52,7 @@ server_timezone = "UTC"
 ##########
 
 mysql_root_password = "root"  # We'll assume user "root"
-mysql_version       = "5.5"   # Options: 5.5 | 5.6
+mysql_version       = "5.6"   # Options: 5.5 | 5.6
 mysql_enable_remote = "false" # remote access enabled when true
 
 ####
@@ -152,7 +152,7 @@ Vagrant.configure("2") do |config|
   # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
-  # config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
+   config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
 
   # Provision Vim
   # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
@@ -162,14 +162,14 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Apache Base
-  # config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
+   config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
 
   ####
   # Databases
   ##########
 
   # Provision MySQL
-  # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+   config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   ####
   # In-Memory Stores
@@ -194,6 +194,9 @@ Vagrant.configure("2") do |config|
 
   # Provision Composer
   # config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
+
+  # Install phpMyAdmin
+   config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", privileged: false, args: mysql_root_password
 
   # Install Screen
   # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
