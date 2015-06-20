@@ -1,98 +1,214 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# Variables used for configuration. Please don't change them unless you
-# know what you're doing.
+####
+# Config GitHub Settings
+##########
 
-# The Vagrantfile API version to use.
-VAGRANTFILE_API_VERSION = "2"
+github_username = "fideloper"
+github_repo     = "Vaprobash"
+github_branch   = "1.4.0"
+github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
-# Which box Vagrant should use.
-box = "ubuntu/trusty64"
+# Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
+# https://github.com/settings/tokens
+github_pat      = ""
 
-# Amount of RAM available to VM.
-memory = 1024
+####
+# VM Configuration
+##########
 
-# Amount of CPUs available to VM.
-cpu = 2
+# See https://atlas.hashicorp.com/boxes/search for available boxes.
+box      = "ubuntu/trusty64"
+box_name = "Vaprobash"
 
-# The name of the project.
-project_name = "projectname"
+hostname = "vaprobash.dev"
+hosts    = [ # Array containing all the vhosts for vagrant-hostsupdater.
+  # "example1.dev",
+  # "example2.dev",
+  # "example3.dev",
+]
 
-# The IP adress used by the VM.
-ip_address = "192.168.9.99"
+# Set a local private network IP address.
+# See http://en.wikipedia.org/wiki/Private_network for explanation
+# You can use the following IP ranges:
+#   10.0.0.1    - 10.255.255.254
+#   172.16.0.1  - 172.31.255.254
+#   192.168.0.1 - 192.168.255.254
+server_ip     = "192.168.22.10"
+server_cpus   = "1"    # Cores
+server_memory = "512"  # MB
+server_swap   = "1024" # Options: false | int (MB) - Guideline: Between one or two times the server_memory
 
-# The adress on which the VM will be available in your browser.
-hostname = project_name+".dev"
+# See http://en.wikipedia.org/wiki/List_of_tz_database_time_zones for available timezones.
+# UTC        for Universal Coordinated Time
+# EST        for Eastern Standard Time
+# US/Central for American Central
+# US/Eastern for American Eastern
+server_timezone = "UTC"
 
-# The Vagrant SSH username.
-username = "vagrant"
+####
+# Database Configuration
+##########
 
-# The Vagrant SSH password.
-password = "vagrant"
+mysql_root_password = "root"  # We'll assume user "root"
+mysql_version       = "5.5"   # Options: 5.5 | 5.6
+mysql_enable_remote = "false" # remote access enabled when true
 
-# All Vagrant configuration is done below. Please don't change it unless you
-# know what you're doing.
+####
+# Languages and Packages
+##########
 
-Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+# Ruby Options
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
+ruby_version = "latest" # Choose what ruby version should be installed (will also be the default version)
+ruby_gems    = [ # List any Ruby Gems that you want to install
+  #"jekyll",
+  #"sass",
+  #"compass",
+  #"susy",
+  #"breakpoint",
+]
+
+# PHP Options
+
+php_timezone      = "UTC" # http://php.net/manual/en/timezones.php
+php_version       =  "5.6" # Options: 5.5 | 5.6
+composer_packages = [ # List any global Composer packages that you want to install
+  #"phpunit/phpunit:4.7.*",
+  #"codeception/codeception:2.0.*",
+  #"phpspec/phpspec:2.2.*",
+  #"squizlabs/php_codesniffer:2.3.*",
+  #"halleck45/phpmetrics:1.1.*",
+  #"pdepend/pdepend:2.1.*",
+  #"phpmd/phpmd:2.2.*",
+  #"sebastian/phpcpd:2.0.*",
+  #"sebastian/phpdcd:1.0.*",
+]
+
+# NodeJS Options
+
+nodejs_version  = "latest" # By default "latest" will equal the latest stable version
+nodejs_packages = [ # List any global NodeJS packages that you want to install
+  #"grunt",
+  #"grunt-cli",
+  #"gulp",
+  #"bower",
+  #"yo",
+]
+
+# The synced folder settings.
+src  = "."
+dest = "/var/www"
+id   = "core"
+
+Vagrant.configure("2") do |config|
+
+  # Set server to configured box.
   config.vm.box = box
 
-  # Setting the username and password for SSH.
-  config.ssh.username = username
-  config.ssh.password = password
-
-  # Assigning IP adress to the VM.
-  config.vm.network :private_network, ip: ip_address
-
-  # Set the project's hostname.
+  # Create a hostname, don't forget to put it to the `hosts` file
+  # This will point to the server's default virtual host
   config.vm.hostname = hostname
 
-  # Create a forwarded port mapping which allows access to a specific port
-  # within the machine from a port on the host machine.
+  # Create a static IP
+  config.vm.network :private_network, ip: server_ip
+  config.vm.network :forwarded_port, guest: 80, host: 8000
 
-  # Mapping the port used by Apache.
-  config.vm.network "forwarded_port", guest: 80, host: 8080
+  # Use NFS for the shared folder
+  config.vm.synced_folder src, dest,
+    id: id
 
-  # Mapping the port used by MySQL.
-  config.vm.network "forwarded_port", guest: 3306, host: 8081
-
-  # Share additional folders to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  config.vm.synced_folder ".", "/vagrant",
-    id: "vagrant-root",
-    owner: "vagrant",
-    group: "vagrant"
-
-  config.vm.synced_folder "./html", "/var/www/html",
-    create: true,
-    id: "web-root",
-    owner: "www-data",
-    group: "www-data"
-
-  # Provider-specific configuration so you can fine-tune various
-  # backing providers for Vagrant. These expose provider-specific options.
+  # If using VirtualBox
   config.vm.provider :virtualbox do |vb|
 
-    # Set the VirtualBox name when booting the machine.
-    vb.name = project_name
+    vb.name = box_name
 
-    # Display the VirtualBox GUI when booting the machine
-    vb.gui = false
+    # Set server cpus
+    vb.customize ["modifyvm", :id, "--cpus", server_cpus]
 
-    # Customize the amount of RAM and CPUs on the VirtualBox machine.
-    vb.customize ["modifyvm", :id, "--memory", memory, "--cpus", cpu]
+    # Set server memory
+    vb.customize ["modifyvm", :id, "--memory", server_memory]
+
+    # Set the timesync threshold to 10 seconds, instead of the default 20 minutes.
+    # If the clock gets more than 15 minutes out of sync (due to your laptop going
+    # to sleep for instance, then some 3rd party services will reject requests.
+    vb.customize ["guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000]
 
   end
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
+  if Vagrant.has_plugin?("vagrant-hostsupdater")
+    config.hostsupdater.aliases = hosts
+  end
 
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  ####
+  # Base Items
+  ##########
+
+  # Provision Base Packages
+  # config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
+
+  # optimize base box
+  # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
+
+  # Provision PHP
+  # config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
+
+  # Provision Vim
+  # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
+
+  ####
+  # Web Servers
+  ##########
+
+  # Provision Apache Base
+  # config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
+
+  ####
+  # Databases
+  ##########
+
+  # Provision MySQL
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+
+  ####
+  # In-Memory Stores
+  ##########
+
+  # Install Memcached
+  # config.vm.provision "shell", path: "#{github_url}/scripts/memcached.sh"
+
+  ####
+  # Additional Languages
+  ##########
+
+  # Install Nodejs
+  # config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
+
+  # Install Ruby Version Manager (RVM)
+  # config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
+
+  ####
+  # Frameworks and Tooling
+  ##########
+
+  # Provision Composer
+  # config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
+
+  # Install Screen
+  # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
+
+  # Install Mailcatcher
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
+
+  # Install git-ftp
+  # config.vm.provision "shell", path: "#{github_url}/scripts/git-ftp.sh", privileged: false
+
+  ####
+  # Local Scripts
+  # Any local scripts you may want to run post-provisioning.
+  # Add these to the same directory as the Vagrantfile.
+  ##########
+  # config.vm.provision "shell", path: "./script.sh"
 
 end
