@@ -10,10 +10,6 @@ github_repo     = "my-vagrant-config"
 github_branch   = "develop"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
-# Because this:https://developer.github.com/changes/2014-12-08-removing-authorizations-token/
-# https://github.com/settings/tokens
-github_pat      = ""
-
 ####
 # VM Configuration
 ##########

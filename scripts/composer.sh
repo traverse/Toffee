@@ -4,7 +4,9 @@
 php -v > /dev/null 2>&1
 PHP_IS_INSTALLED=$?
 
-[[ $PHP_IS_INSTALLED -ne 0 ]] && { printf "!!! PHP is not installed.\n    Installing Composer aborted!\n"; exit 0; }
+if [[ $PHP_IS_INSTALLED -ne 0 ]]; then
+  echo "!!! PHP is not installed. Check the Vagrant file."; exit
+fi
 
 # Test if Composer is installed
 composer -v > /dev/null 2>&1
@@ -13,7 +15,6 @@ COMPOSER_IS_INSTALLED=$?
 # Contains all arguments that are passed
 COMPOSER_ARG=($@)
 
-GITHUB_OAUTH=${COMPOSER_ARG[0]}
 COMPOSER_PACKAGES=${COMPOSER_ARG[@]:1}
 
 # True, if composer is not installed
@@ -25,13 +26,6 @@ if [[ $COMPOSER_IS_INSTALLED -ne 0 ]]; then
 else
     echo ">>> Updating Composer"
     sudo composer self-update
-fi
-
-if [[ $GITHUB_OAUTH -ne "" ]]; then
-    if [[ ! $COMPOSER_IS_INSTALLED -ne 0 ]]; then
-    else
-        composer config -g github-oauth.github.com $GITHUB_OAUTH
-    fi
 fi
 
 # Install Global Composer Packages if any are given
