@@ -145,13 +145,13 @@ Vagrant.configure("2") do |config|
    config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # optimize base box
-   config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
+  # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
    config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
 
   # Provision Vim
-   config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
+  # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
 
   ####
   # Web Servers
@@ -179,10 +179,10 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Install Nodejs
-   config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
+  # config.vm.provision "shell", path: "#{github_url}/scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
 
   # Install Ruby Version Manager (RVM)
-   config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
+  # config.vm.provision "shell", path: "#{github_url}/scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
 
   ####
   # Frameworks and Tooling
@@ -192,13 +192,13 @@ Vagrant.configure("2") do |config|
    config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
 
   # Install phpMyAdmin
-   config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
+  # config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
 
   # Install Screen
-   config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
+  # config.vm.provision "shell", path: "#{github_url}/scripts/screen.sh"
 
   # Install Mailcatcher
-   config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mailcatcher.sh"
 
   # Install git-ftp
   # config.vm.provision "shell", path: "#{github_url}/scripts/git-ftp.sh", privileged: false
