@@ -6,7 +6,7 @@
 ##########
 
 github_username = "Traverse"
-github_repo     = "my-vagrant-config"
+github_repo     = "Toffee"
 github_branch   = "develop"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
@@ -48,7 +48,7 @@ server_timezone = "UTC"
 ##########
 
 mysql_root_password = "root"  # We'll assume user "root"
-mysql_version       = "5.6"   # Options: 5.5 | 5.6
+mysql_version       = "5.5"   # Options: 5.5 | 5.6
 mysql_enable_remote = "false" # remote access enabled when true
 
 ####
@@ -60,10 +60,10 @@ mysql_enable_remote = "false" # remote access enabled when true
 ruby_version = "latest" # Choose what ruby version should be installed (will also be the default version)
 ruby_gems    = [ # List any Ruby Gems that you want to install
   #"jekyll",
-  "sass",
+  #"sass",
   #"compass",
-  "susy",
-  "breakpoint",
+  #"susy",
+  #"breakpoint",
 ]
 
 # PHP Options
@@ -74,7 +74,7 @@ composer_packages = [ # List any global Composer packages that you want to insta
   #"phpunit/phpunit:4.7.*",
   #"codeception/codeception:2.0.*",
   #"phpspec/phpspec:2.2.*",
-  "squizlabs/php_codesniffer:2.3.*",
+  #"squizlabs/php_codesniffer:2.3.*",
   #"halleck45/phpmetrics:1.1.*",
   #"pdepend/pdepend:2.1.*",
   #"phpmd/phpmd:2.2.*",
@@ -87,10 +87,10 @@ composer_packages = [ # List any global Composer packages that you want to insta
 nodejs_version  = "latest" # By default "latest" will equal the latest stable version
 nodejs_packages = [ # List any global NodeJS packages that you want to install
   #"grunt",
-  "grunt-cli",
+  #"grunt-cli",
   #"gulp",
-  "bower",
-  "yo",
+  #"bower",
+  #"yo",
 ]
 
 # The synced folder settings.
@@ -142,13 +142,13 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Base Packages
-   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap, server_timezone]
 
   # optimize base box
   # config.vm.provision "shell", path: "#{github_url}/scripts/base_box_optimizations.sh", privileged: true
 
   # Provision PHP
-   config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/php.sh", args: [php_timezone, php_version]
 
   # Provision Vim
   # config.vm.provision "shell", path: "#{github_url}/scripts/vim.sh", args: github_url
@@ -158,14 +158,14 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Apache Base
-   config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/apache.sh", args: [server_ip, dest, hostname, github_url]
 
   ####
   # Databases
   ##########
 
   # Provision MySQL
-   config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
+  # config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
 
   ####
   # In-Memory Stores
@@ -189,7 +189,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Composer
-   config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
+  # config.vm.provision "shell", path: "#{github_url}/scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
 
   # Install phpMyAdmin
   # config.vm.provision "shell", path: "#{github_url}/scripts/phpmyadmin.sh", args: mysql_root_password
