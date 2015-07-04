@@ -1,7 +1,12 @@
-## Basic Vagrant LAMP stack
+# Toffee
 
-A basic Vagrant LAMP stack using a shellscript to provision the VM.
+Toffee is a customizable LAMP stack that uses `Vagrant`. I've borrowed heavily from [Vaprobash](https://github.com/fideloper/Vaprobash/), some provisioning scripts are unaltered some are tweaked/modified so credit goes to [Fideloper](https://github.com/fideloper/) for giving me an amazing starting point.
 
-Installs Apache, PHP, MySQL, PHPMyAdmin, Xdebug and sets up an empty database.
+All the configuration settings can be found in the `Vagrantfile`
 
-Most of the configuration is done using variables in both the Vagrantfile and bootstrap.sh so if you want to change settings you only have to change the variables.
+***Any suggestions are welcome!***
+
+
+***TODO:***
+- Add usage info.
+- Add help section.
