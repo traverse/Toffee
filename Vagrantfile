@@ -7,7 +7,7 @@
 
 github_username = "Traverse"
 github_repo     = "Toffee"
-github_branch   = "develop"
+github_branch   = "master"
 github_url      = "https://raw.githubusercontent.com/#{github_username}/#{github_repo}/#{github_branch}"
 
 ####
