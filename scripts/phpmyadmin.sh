@@ -19,7 +19,7 @@ if [[ $APACHE_IS_INSTALLED -ne 0 ]]; then
 fi
 
 # Add repo for phpMyAdmin
-sudo add-apt-repository -y ppa:nijel/phpmyadmin
+sudo apt-get install phpmyadmin -y
 
 # Update Again
 sudo apt-get update
